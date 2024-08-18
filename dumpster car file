@@ -1,0 +1,53 @@
+import java.util.*;
+public class Challenge
+{
+    public static void main(String[] args)
+    {
+      int[] array1 = {3, 3, 3, 3};
+      System.out.println(fuelUsed(array1, 2));
+      int[] array2 = {3, 3, 3, 3};
+      System.out.println(fuelUsed(array2, 7));
+      int[] array3 = {3, 2, 1, 0, 7, 0};
+      System.out.println(fuelUsed(array3, 6));
+      int[] array4 = {0, 1, 0, 0};
+      System.out.println(fuelUsed(array4, 2));
+    }
+  public static int fuelUsed(int[] array, int load)
+  { // load == how much trash car can hold each time
+    int fuel = 1; // the OG position of -1
+    int max_load = load; // for restoring the value of load
+    for(int i = 0; i < array.length; i++)
+      { // vehicle continues on into next index if there max load not reached
+        // scenario 1: load can take more than trash in one index, so move onto others
+        if(load > array[i])
+        {
+          load -= array[i]; // load decreases
+          array[i] = 0;
+          fuel += 1; // fuel added to go to next index
+        }
+        else if(load < array[i]) // when load is less than amount, which means going to dumpster
+        {
+          while(load - array[i] >= 0)
+            { // ISSUE WHAT IF second round, max load can move on to next index???
+            array[i] -= load; // getting the trash
+            fuel += 2 * (i + 1); // fuel added from to dumpster and back             
+            }
+          if(load - array[i] < 0) // if load takes all of the current index, move on to next
+          {
+            
+          }
+          fuel += 1; // to next index
+          load = max_load; // restoring value of load if it got decreased
+        }
+        else // load is equal to trash number
+        {
+          array[i] = 0;
+          fuel += 2 * (i + 1) + 1; // adding fuel to trash and back to index + 1
+        }
+        System.out.println(Arrays.toString(array));
+      }
+      fuel += array.length;
+      return fuel;
+    }
+}
+
