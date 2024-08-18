@@ -1,1 +1,2 @@
 # dumpster
+A code that takes an array of trash and stimulates how much fuel it would take to take the trash to the dumpster. Each array index value signifies the amount of trash it holds. The method would take an int array and a max load. If the max load is not met in the dumpster truck at one index, then the truck will move on. When max load is reached, the truck moves back. Each index space uses one fuel. The ending position should be back to the dumpster (position -1). 
