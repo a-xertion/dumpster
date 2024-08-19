@@ -6,14 +6,15 @@ public class Challenge
       int[] array1 = {3, 3, 3, 3};
       System.out.println(fuelUsed(array1, 2));
       int[] array2 = {3, 3, 3, 3};
-      System.out.println(fuelUsed(array2, 7));
+      //System.out.println(fuelUsed(array2, 7));
       int[] array3 = {3, 2, 1, 0, 7, 0};
-      System.out.println(fuelUsed(array3, 6));
+      //System.out.println(fuelUsed(array3, 6));
       int[] array4 = {0, 1, 0, 0};
-      System.out.println(fuelUsed(array4, 2));
+      //System.out.println(fuelUsed(array4, 2));
     }
-  public static int fuelUsed(int[] array, int load)
+  /*public static int fuelUsed(int[] array, int load)
   { // load == how much trash car can hold each time
+    System.out.println(Arrays.toString(array));
     int fuel = 1; // the OG position of -1
     int max_load = load; // for restoring the value of load
     for(int i = 0; i < array.length; i++)
@@ -24,30 +25,67 @@ public class Challenge
           load -= array[i]; // load decreases
           array[i] = 0;
           fuel += 1; // fuel added to go to next index
+          System.out.println("load greater: " + Arrays.toString(array));
+          System.out.println("fuel: " + fuel);
         }
         else if(load < array[i]) // when load is less than amount, which means going to dumpster
         {
-          while(load - array[i] >= 0)
+          while(array[i] - load >= 0)
             { // ISSUE WHAT IF second round, max load can move on to next index???
-            array[i] -= load; // getting the trash
-            fuel += 2 * (i + 1); // fuel added from to dumpster and back             
+                array[i] -= load; // getting the trash
+                fuel += 2 * (i + 1); // fuel added from to dumpster and back      
+                load = max_load;
+                System.out.println("load less but equal: " + Arrays.toString(array));
             }
-          if(load - array[i] < 0) // if load takes all of the current index, move on to next
-          {
-            
-          }
+          if(array[i] - load < 0)
+            {
+              load -= array[i]; // part of the load is taken away for next index to fill
+              array[i] = 0; // completely emptied, going to next index to fill trash to max load
+              System.out.println("load less, next index: " + Arrays.toString(array));
+              System.out.println("load: " + load);
+            }
           fuel += 1; // to next index
-          load = max_load; // restoring value of load if it got decreased
+          System.out.println("fuel: " + fuel);
+          // System.out.println("load less: " + Arrays.toString(array));
         }
         else // load is equal to trash number
         {
           array[i] = 0;
           fuel += 2 * (i + 1) + 1; // adding fuel to trash and back to index + 1
+          System.out.println("load equal: " + Arrays.toString(array));
+          System.out.println("fuel: " + fuel);
         }
-        System.out.println(Arrays.toString(array));
       }
       fuel += array.length;
       return fuel;
-    }
+    }*/
+  public static int fuelUsed(int[] array, int load)
+  {
+    int fuel = 0;
+    boolean max_reached = false;
+    int max_load = load;
+    for(int i = 0; i < array.length; i++)
+      {
+        while(array[i] > 0) // still stuff in array[i]
+          {
+            if(array[i] <= load) // moving to next index
+            {
+              load -= array[i];
+              array[i] = 0;
+              fuel += 1; // next index
+            }
+            else  // max load is there
+            {
+              array[i] -= load;
+              fuel += 2 * (i + 1);
+            }
+
+            System.out.println(Arrays.toString(array));
+          }
+      }
+    System.out.println(Arrays.toString(array));
+    fuel += array.length;
+    return fuel; 
+  }
 }
 
