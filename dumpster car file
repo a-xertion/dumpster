@@ -12,10 +12,10 @@ public class Challenge
       int[] array4 = {0, 1, 0, 0};
       //System.out.println(fuelUsed(array4, 2));
     }
-  /*public static int fuelUsed(int[] array, int load)
+  public static int fuelUsed(int[] array, int load)
   { // load == how much trash car can hold each time
-    System.out.println(Arrays.toString(array));
-    int fuel = 1; // the OG position of -1
+    //System.out.println(Arrays.toString(array));
+    int fuel = 0; // the OG position of -1
     int max_load = load; // for restoring the value of load
     for(int i = 0; i < array.length; i++)
       { // vehicle continues on into next index if there max load not reached
@@ -27,6 +27,12 @@ public class Challenge
           fuel += 1; // fuel added to go to next index
           System.out.println("load greater: " + Arrays.toString(array));
           System.out.println("fuel: " + fuel);
+          if(i < array.length - 1 && array[i + 1] - load >= 0)
+          {
+            array[i + 1] -= load;
+            fuel += i + 2;
+            load = max_load;
+          }
         }
         else if(load < array[i]) // when load is less than amount, which means going to dumpster
         {
@@ -41,51 +47,102 @@ public class Challenge
             {
               load -= array[i]; // part of the load is taken away for next index to fill
               array[i] = 0; // completely emptied, going to next index to fill trash to max load
+              fuel += 1;
+              
+              if(i < array.length - 1 && array[i + 1] - load >= 0)
+              {
+                array[i + 1] -= load;
+                fuel += i + 2;
+                load = max_load;
+                
+              }
               System.out.println("load less, next index: " + Arrays.toString(array));
               System.out.println("load: " + load);
             }
           fuel += 1; // to next index
           System.out.println("fuel: " + fuel);
-          // System.out.println("load less: " + Arrays.toString(array));
+          System.out.println("load less: " + Arrays.toString(array));
         }
         else // load is equal to trash number
         {
           array[i] = 0;
           fuel += 2 * (i + 1) + 1; // adding fuel to trash and back to index + 1
-          System.out.println("load equal: " + Arrays.toString(array));
-          System.out.println("fuel: " + fuel);
+          
         }
+        System.out.println("load equal: " + Arrays.toString(array));
+        System.out.println("fuel: " + fuel);
       }
-      fuel += array.length;
+      //fuel += array.length;
       return fuel;
-    }*/
-  public static int fuelUsed(int[] array, int load)
+    }
+
+/*public static int fuelUsed(int[] array, int load)
   {
     int fuel = 0;
-    boolean max_reached = false;
     int max_load = load;
+    int carry = 0;
     for(int i = 0; i < array.length; i++)
       {
         while(array[i] > 0) // still stuff in array[i]
           {
-            if(array[i] <= load) // moving to next index
+            if(array[i] < load) // moving to next index
             {
               load -= array[i];
               array[i] = 0;
               fuel += 1; // next index
+              
             }
-            else  // max load is there
+            else if(array[i] - load == 0) // max load is there
             {
               array[i] -= load;
               fuel += 2 * (i + 1);
+              load = max_load;
+            }
+            else // array[i] bigger than load
+            {
+              array[i] -= load; // max reached
+              fuel += 2 * (i + 1);
+              
             }
 
             System.out.println(Arrays.toString(array));
+            System.out.println("fuel: " + fuel);
           }
       }
-    System.out.println(Arrays.toString(array));
     fuel += array.length;
     return fuel; 
-  }
+  } */
+  /*public static int fuelUsed(int[] array, int load)
+  {
+    int carry = 0;
+    int fuel = 0;
+    boolean max_reached = false;
+    for(int i = 0; i < array.length; i++)
+      {
+        while(array[i] > 0 && carry <= load)
+          {
+            if(carry == load)
+            {
+              fuel += 2 * (i + 1) + 1;
+              carry = 0;
+              break;
+            }
+            if(array[i] - load >= 0) // still stuff in this
+            {
+              carry += ;
+              array[i] -= load;
+              // max_reached = true;
+            }
+            else if(array[i] - load < 0) // moving onto next index
+            {
+              carry += array[i];
+              array[i] = 0;
+              fuel += 1;
+            }
+
+          }
+      }
+    return fuel;
+  }*/
 }
 
