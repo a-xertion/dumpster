@@ -15,7 +15,7 @@ public class Challenge
   public static int fuelUsed(int[] array, int load)
   { // load == how much trash car can hold each time
     //System.out.println(Arrays.toString(array));
-    int fuel = 0; // the OG position of -1
+    int fuel = 1; // the OG position of -1
     int max_load = load; // for restoring the value of load
     for(int i = 0; i < array.length; i++)
       { // vehicle continues on into next index if there max load not reached
@@ -57,9 +57,9 @@ public class Challenge
                 
               }
               System.out.println("load less, next index: " + Arrays.toString(array));
-              System.out.println("load: " + load);
+              System.out.println("fuel: " + fuel);
             }
-          fuel += 1; // to next index
+          //fuel += 1; // to next index
           System.out.println("fuel: " + fuel);
           System.out.println("load less: " + Arrays.toString(array));
         }
@@ -67,9 +67,9 @@ public class Challenge
         {
           array[i] = 0;
           fuel += 2 * (i + 1) + 1; // adding fuel to trash and back to index + 1
-          
+         System.out.println("fuel: " + fuel); 
         }
-        System.out.println("load equal: " + Arrays.toString(array));
+        //System.out.println("load equal: " + Arrays.toString(array));
         System.out.println("fuel: " + fuel);
       }
       //fuel += array.length;
